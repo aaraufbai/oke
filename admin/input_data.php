@@ -64,7 +64,7 @@
                                             <input type="text" class="form-control form-control-lg " name="jumlah" placeholder="Jumlah Buku" aria-label="Nomor telepon">
                                         </div>
                                         <div class="mb-3">
-                                            <select class="form-select text-uppercase" <?= $d['pinjaman']; ?> name="pinjaman" aria-label="Default select example">
+                                            <select class="form-select text-uppercase" name="pinjaman" aria-label="Default select example">
                                                 <option value="active">avtive</option>
                                                 <option value="non">non active</option>
                                             </select>
