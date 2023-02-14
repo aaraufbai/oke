@@ -13,6 +13,6 @@ $acak = $_POST['acak'];
 
 mysqli_query($koneksi,"insert into t_buku values('$id_buku','$nm_buku','$penulis','$penerbit','$th','$halaman','$lr','$acak')");
 
-header("location:input_buku.php?id_buku=$id_buku");
+header("location:act_buku.php?id=$id");
 
 

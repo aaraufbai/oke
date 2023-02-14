@@ -54,11 +54,10 @@
                                                 <input type="text" class="form-control form-control-lg me-2" value="<?= $d['th']; ?>" name="th" placeholder="Tahun Terbit" aria-label="Nama Buku">
                                                 <input type="text" class="form-control form-control-lg" value="<?= $d['halaman']; ?>" name="halaman" placeholder="Halaman Buku" aria-label="Nama Buku">
                                             </div>
-                                            <div class="mb-3">
                                             <select class="form-select" name="lorong" aria-label="Default select example">
                                                 <?php
                                                 include '../koneksi.php';
- 
+
                                                 $query = mysqli_query($koneksi, "SELECT * FROM t_rak");
                                                 $d = mysqli_num_rows($query);
                                                 while ($d = mysqli_fetch_array($query)) {
@@ -70,7 +69,9 @@
                                                 }
                                                 ?>
                                             </select>
-                                        </div>
+                                            <div class="mb-3">
+
+                                            </div>
                                             <input type="text" hidden value="<?php echo $d['acak']; ?>" id="massage" name="acak">
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-lg btn-primary w-100 mt-4 mb-0" onclick="getRandomNumber()">Edit Pembaca</button>

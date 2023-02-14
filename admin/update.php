@@ -106,6 +106,9 @@
                 <input type="date" class="form-control" name="t" placeholder="Tanggal">
                 <button type="submit" class="input-group-text text-body"></button>
               </div>
+              <div class="input-groub">
+
+              </div>
 
             </form>
 
@@ -148,18 +151,19 @@
                     $no = 1;
                     include '../koneksi.php';
 
+
                     if (isset($_GET['s']) && $_GET['t']) {
                       $name = $_GET['s'];
                       $tanggalAwal = $_GET['t'];
-                      $query = mysqli_query($koneksi, "SELECT * FROM t_update where nm_peminjam like '%" . $name . "%' and tanggal = '$tanggalAwal' or pinjaman like '%" . $name . "%' and tanggal = '$tanggalAwal'");
+                      $query = mysqli_query($koneksi, "SELECT * FROM t_update where nm_peminjam like '%" . $name . "%' and tanggal = '$tanggalAwal'  and peminjam = 'active or pinjaman like '%" . $name . "%' and tanggal = '$tanggalAwal' and pinjaman ='active' ");
                     } else if (isset($_GET['s']) && $_GET['t'] == "") {
                       $name = $_GET['s'];
-                      $query = mysqli_query($koneksi, "SELECT * FROM t_update where nm_peminjam like '%" . $name . "%' or nm_buku like '%" . $name . "%' or pinjaman like '%" . $name . "%'");
+                      $query = mysqli_query($koneksi, "SELECT * FROM t_update where nm_peminjam like '%" . $name . "%' and pinjaman = 'active' or nm_buku like '%" . $name . "%' or pinjaman like '%" . $name . "%' and pinjaman = 'active'");
                     } else if (isset($_GET['t'])) {
                       $tanggalawal = $_GET['t'];
-                      $query = mysqli_query($koneksi, "SELECT * FROM t_update where tanggal = '$tanggalawal'");
+                      $query = mysqli_query($koneksi, "SELECT * FROM t_update where tanggal = '$tanggalawal'  and pinjaman = 'active' ");
                     } else {
-                      $query = mysqli_query($koneksi, "SELECT * FROM t_update");
+                      $query = mysqli_query($koneksi, "SELECT * FROM t_update where pinjaman = 'active'");
                     }
                     $hitung = mysqli_num_rows($query);
                     while ($d = mysqli_fetch_array($query)) {
@@ -182,12 +186,18 @@
                         <td class="align-middle text-center text-sm">
                           <span class="text-xs font-weight-bold mb-0"><?= $d['jumlah']; ?></span>
                         </td>
-                        <!-- <td class="align-middle text-center text-sm">
-                          <span class="badge badge-sm bg-gradient-success">Active</span>
-                        </td> -->
-                        <td class="align-middle text-center text-sm">
-                          <span class="badge badge-sm bg-gradient-danger"><?= $d['pinjaman']; ?></span>
-                        </td>
+                        <?php
+                        if ($d['pinjaman'] == 'active') {
+                          echo '<td class="align-middle text-center text-sm">
+                          <span class="badge badge-sm bg-gradient-success">ACTIVE</span>
+                        </td>';
+                        } else {
+                          echo '<td class="align-middle text-center text-sm">
+                          <span class="badge badge-sm bg-gradient-danger">NON</span>
+                        </td>';
+                        }
+
+                        ?>
                         <td class="align-middle">
                           <a href="edit.php?id_update=<?php echo $d['id_update']; ?>" class="text-secondary me-4 text-xl" data-toggle="tooltip" data-original-title="Edit user">
                             <i class="ri-edit-box-line"></i>

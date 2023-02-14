@@ -121,6 +121,65 @@
               <h6>Daftar Buku</h6>
               <div>
                 <a class="btn btn-sl btn-primary rounded-pill" href="input_buku.php">Tambah Buku</a>
+                <!-- buka -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  Launch static backdrop modal
+                </button>
+
+                <!-- Modal -->
+                <form role="form" method="POST" action="act_buku.php">
+                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <div class="col-xl-10 col-lg-10 col-md-10 mx-auto ">
+
+                            <h4 class="font-weight-bolder align-items-center text-center">Plus Book</h4>
+
+                            <div class="mb-3">
+                              <input type="text" class="form-control form-control-lg text-uppercase" name="nm_buku" placeholder="Nama Buku" aria-label="Nama Buku">
+                            </div>
+                            <div class="mb-3 d-flex">
+                              <input type="text" class="form-control form-control-lg text-uppercase me-2" name="penulis" placeholder="Penulis" aria-label="Nama Buku">
+                              <input type="text" class="form-control form-control-lg text-uppercase" name="penerbit" placeholder="Penerbit" aria-label="Nama Buku">
+                            </div>
+                            <div class="mb-3 d-flex">
+                              <input type="text" class="form-control form-control-lg text-uppercase  me-2" name="th" placeholder="Tahun Terbit" aria-label="Nama Buku">
+                              <input type="text" class="form-control form-control-lg text-uppercase " name="halaman" placeholder="Halaman Buku" aria-label="Nama Buku">
+                            </div>
+                            <div class="mb-3">
+                              <select class="form-select" name="lorong" aria-label="Default select example">
+                                <?php
+                                include '../koneksi.php';
+
+                                $query = mysqli_query($koneksi, "SELECT * FROM t_rak");
+                                $d = mysqli_num_rows($query);
+                                while ($d = mysqli_fetch_array($query)) {
+                                ?>
+                                  <option>
+                                    <?= $d['rak']; ?>
+                                  </option>
+                                <?php
+                                }
+                                ?>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <input type="text" hidden class="form-control form-control-lg" id="massage" name="acak" placeholder="Nama Buku" aria-label="Nama Buku">
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-lg btn-primary btn-lg  mb-0" onclick="getRandomNumber()">Tambah Pembaca</button>
+                          <button type="button" class="btn btn-lg btn-secondary btn-lg  mb-0" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <!-- tutup -->
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -147,7 +206,7 @@
                     } else if (isset($_GET['s'])) {
                       $name = $_GET['s'];
                       $query = mysqli_query($koneksi, "SELECT * FROM t_buku where nm_buku like '%" . $name . "%'");
-                    }else {
+                    } else {
                       $query = mysqli_query($koneksi, "SELECT * FROM t_buku");
                     }
 
@@ -180,8 +239,8 @@
                           <a href="hapus1.php?id_buku=<?php echo $d['id_buku']; ?>" class="text-secondary text-xl" data-toggle="tooltip" data-original-title="Edit user">
                             <i class="ri-delete-bin-line me-4"></i>
                           </a>
-                          <a href="#<?php echo $d['id_buku']; ?>" class="text-secondary text-xl" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="ri-survey-line"></i>
+                          <a href="<?php echo $d['id_buku']; ?>" class="text-secondary text-xl" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="ri-survey-line"></i>
                           </a>
 
                         </td>
@@ -210,6 +269,14 @@
         damping: '0.5'
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- number rundom book -->
+  <script>
+    function getRandomNumber() {
+      var randomNumber = Math.random() * 10
+      var input = document.getElementById('massage')
+      input.value = randomNumber;
     }
   </script>
   <!-- Github buttons -->
